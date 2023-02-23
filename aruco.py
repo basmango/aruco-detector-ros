@@ -13,7 +13,7 @@ class ArucoDetector:
         self.image_sub = rospy.Subscriber('/video_frames', Image, self.image_callback)
         self.image_pub = rospy.Publisher('/detected_aruco_frames', Image, queue_size=10)
         self.coord_pub = rospy.Publisher('/aruco_coordinates', Int32MultiArray, queue_size=10)
-        self.self.pt_star = np.array([566.00, 283.00, 719.00, 326.00,675.00, 480.00,520.0,435.0]) #Desired pixel points location
+        self.pt_star = np.array([566, 283, 719, 326,675, 480,520,435]) #Desired pixel points location
     
     def image_callback(self, msg):
         cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
@@ -21,7 +21,7 @@ class ArucoDetector:
         parameters =cv2.aruco.DetectorParameters() 
         corners, ids, rejectedImgPoints = aruco.detectMarkers(cv_image, aruco_dict, parameters=parameters)
         
-        cv2.circle(cv_image, (623,380), 10, (0, 255, 0), -1)
+        cv2.circle(cv_image, (640,360), 3, (0, 0, 0), -1)
       
         if len(corners) > 0:
             for r in  corners:
@@ -55,10 +55,13 @@ class ArucoDetector:
             
             msg = Int32MultiArray(data=aruco_coords)
             self.coord_pub.publish(msg)
-
-
-
-            cv2.circle(cv_image, ((self.self.pt_star[0]+self.pt_star[2]+self.pt_star[4]+self.pt_star[6])/4,(self.pt_star[1]+self.pt_star[3]+self.pt_star[5]+self.pt_star[7])/4), 5, (0, 255, 0), -1)
+            
+            st_center = int((self.pt_star[0]+self.pt_star[2]+self.pt_star[4]+self.pt_star[6])/4),int((self.pt_star[1]+self.pt_star[3]+self.pt_star[5]+self.pt_star[7])/4)
+            print(ptA)
+            print(st_center)
+            
+            
+            cv2.circle(cv_image, st_center, 5, (0, 255, 0), -1)
             cv2.circle(cv_image, (self.pt_star[0],self.pt_star[1]), 3, (0, 255, 0), -1)
             cv2.circle(cv_image, (self.pt_star[2],self.pt_star[3]), 3, (0, 255, 0), -1)
             cv2.circle(cv_image, (self.pt_star[4],self.pt_star[5]), 3, (0, 255, 0), -1)

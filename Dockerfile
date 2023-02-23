@@ -15,11 +15,12 @@ RUN sudo apt-get install -y python3 python3-pip ros-noetic-rospy ros-noetic-cv-b
 
 
 COPY requirements.txt /
-COPY aruco.py  /
 
 RUN pip3 install --upgrade pip setuptools wheel
 
 RUN pip3 install -r requirements.txt
+
+COPY aruco.py  /
 
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
