@@ -24,10 +24,8 @@ class ArucoDetector:
         cv2.circle(cv_image, (640,360), 3, (0, 0, 0), -1)
         
         if len(corners)>0:
-            print(corners,ids)
             for c,i in zip(corners,ids):
-                if i==3:    
-                        
+                if i==3:                  
                         (ptA, ptB, ptC, ptD) = c[0]
                         ptB = (int(ptB[0]), int(ptB[1]))
                         ptC = (int(ptC[0]), int(ptC[1]))
@@ -68,7 +66,7 @@ class ArucoDetector:
                         cv2.circle(cv_image, (self.pt_star[6],self.pt_star[7]), 3, (0, 255, 0), -1)
                         #cv_image = aruco.drawDetectedMarkers(cv_image, corners, ids)
                     
-                        self.image_pub.publish(self.bridge.cv2_to_imgmsg(cv_image, encoding='bgr8'))
+        self.image_pub.publish(self.bridge.cv2_to_imgmsg(cv_image, encoding='bgr8'))
 
 if __name__ == '__main__':
     rospy.init_node('aruco_detector', anonymous=True)
