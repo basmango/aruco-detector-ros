@@ -13,7 +13,7 @@ class ArucoDetector:
         self.image_sub = rospy.Subscriber('/video_frames', Image, self.image_callback)
         self.image_pub = rospy.Publisher('/detected_aruco_frames', Image, queue_size=10)
         self.coord_pub = rospy.Publisher('/aruco_coordinates', Int32MultiArray, queue_size=10)
-        self.pt_star = np.array([566, 283, 719, 326,675, 480,520,435]) #Desired pixel points location
+        self.pt_star =np.array([619, 338, 661, 340, 662, 384, 617, 383])  #desired points 
     
     def image_callback(self, msg):
         cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
